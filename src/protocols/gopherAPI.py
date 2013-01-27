@@ -178,6 +178,8 @@ def browse_menu(selector, host, port):
             [i_selector, i_host, i_port] = item[2:5]
             if i_selector[:4] == 'URL:':
                 url = i_selector[4:]
+            if i_selector[:5] == '/URL:':
+                url = i_selector[5:]
             else:
                 url = "http://%s%s" % (i_host,  i_selector)
             data += "<A HREF=%s>%s</A>" % (url, iname)
