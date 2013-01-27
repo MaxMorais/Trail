@@ -183,8 +183,14 @@ def browse_menu(selector, host, port):
             if typechar != 'i':
                 iname += '(TYPE=' + repr(typechar) + ')'
         iname += description
-        if typechar != 'i':
+        if typechar != 'i' and typechar != 'h':
             url = "gopher://%s:%s/%s%s" % (i_host, i_port, typechar, i_selector)
+            data += "<A HREF=%s>%s</A>" % (url, iname)
+        elif typechar == 'h':
+            if i_selector[:4] == 'URL:':
+                url = i_selector[4:]
+            else:
+                url = "http://%s%s" % (i_host,  i_selector)
             data += "<A HREF=%s>%s</A>" % (url, iname)
         else:
             data += iname
@@ -216,6 +222,15 @@ class gopher_access:
                 if selector[1] == '0':
                     self.ctype = "text/plain"
                     self.data = '\n'.join(get_textfile(selector[2:], host, port))
+                if selector[1] == 'g':
+                    self.ctype = "image/gif"
+                    self.data = get_binary(selector[2:], host, port)
+                if selector[1] == 'I':
+                    if selector[-4:] == '.png':
+                        self.ctype = "image/png"
+                    if selector[-4:] == '.jpg' or selector[-5:] == '.jpeg':
+                        self.ctype = "image/jpeg"
+                    self.data = get_binary(selector[2:], host, port)
             else:
                 self.ctype = "text/html"
                 self.data = browse_menu(selector, host, port)                

@@ -7,9 +7,9 @@ from formatter import AS_IS
 from PIL import Image, ImageTk
 
 if hasattr(os, 'popen'):
-    class parse_image_jpeg:
+    class parse_image_png:
     
-        """Parser for image/jpeg files.
+        """Parser for image/png files.
     
         """
     
