@@ -203,6 +203,7 @@ class gopher_access:
             selector = o.path
             if o.query:
                 selector += '?' + o.query
+            selector = selector.replace("%20", ' ')
             if not selector or selector == '/' or len(selector) < 3:
                 self.ctype = "text/html"
                 self.data = browse_menu('', host, port)                
@@ -210,30 +211,32 @@ class gopher_access:
                 if selector[1] == '1':
                     self.ctype = "text/html"
                     self.data = browse_menu(selector[2:], host, port)
-                if selector[1] == '0':
+                elif selector[1] == '0':
                     self.ctype = "text/plain"
                     self.data = '\n'.join(get_textfile(selector[2:], host, port))
-                if selector[1] == '7':
+                elif selector[1] == '7':
                     search_term = tkSimpleDialog.askstring("Search engine", "Query:")
                     self.ctype = "text/html"
                     if search_term:
                         self.data = browse_menu(selector[2:] + TAB + search_term, host, port)
-                if selector[1] == 'g':
+                    else:
+                        self.data = "No query supplied."
+                elif selector[1] == 'g':
                     self.ctype = "image/gif"
                     self.data = get_binary(selector[2:], host, port)
-                if selector[1] == 'I':
+                elif selector[1] == 'I':
                     if selector[-4:] == '.png':
                         self.ctype = "image/png"
                     if selector[-4:] == '.jpg' or selector[-5:] == '.jpeg':
                         self.ctype = "image/jpeg"
                     self.data = get_binary(selector[2:], host, port)
+                else:
+                    self.ctype = "application/octet-stream"
+                    self.data = get_binary(selector[2:], host, port)
             else:
                 self.ctype = "text/html"
                 self.data = browse_menu(selector, host, port)                
                 
-           # else:
-           #     self.ctype = ''
-           #     self.data = get_binary(selector, host, port)
         except:
             raise
             #raise IOError, ('gopher error')
