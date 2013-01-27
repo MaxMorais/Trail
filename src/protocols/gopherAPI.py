@@ -172,7 +172,8 @@ def browse_menu(selector, host, port):
         if typechar != 'i' and typechar != 'h':
             [i_selector, i_host, i_port] = item[2:5]
             url = "gopher://%s:%s/%s%s" % (i_host, i_port, typechar, i_selector)
-            data += "<A HREF=%s>%s</A>" % (url, iname)
+            url = url.replace(' ', "%20")
+            data += '<A HREF="%s">%s</A>' % (url, iname)
         elif typechar == 'h':
             [i_selector, i_host, i_port] = item[2:5]
             if i_selector[:4] == 'URL:':
@@ -182,7 +183,7 @@ def browse_menu(selector, host, port):
             data += "<A HREF=%s>%s</A>" % (url, iname)
         else:
             data += iname
-        data += '<BR>'
+        data += '<BR>\n'
     return (LISTING_HEADER % {'url': selector}) + data + LISTING_TRAILER
 
 ####################################################
