@@ -1,5 +1,5 @@
 Trail — A Python web browser based on Grail 0.6
-
+===============================================
 
 
 Notes:
@@ -8,6 +8,12 @@ Notes:
 * Caching is disabled because it threw exceptions.
 * Also, HTTPS does not work.
 
+Requirements:
+
+Python 2.x, Tk, and PIL
+
+
+Original README follows:
 *******************************************************************************
 
 

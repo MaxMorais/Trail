@@ -15,6 +15,7 @@ import string
 import sys
 import os
 import socket
+import tkSimpleDialog
 
 from urllib import unquote, splithost, splitport, splituser, \
      splitpasswd, splitattr, splitvalue, quote
@@ -46,20 +47,6 @@ LISTING_TRAILER = """</PRE>
 DEF_SELECTOR = ''
 DEF_HOST     = 'gopher.floodgap.com'
 DEF_PORT     = 70
-
-# Recognized file types
-T_TEXTFILE  = '0'
-T_MENU      = '1'
-T_CSO       = '2'
-T_ERROR     = '3'
-T_BINHEX    = '4'
-T_DOS       = '5'
-T_UUENCODE  = '6'
-T_SEARCH    = '7'
-T_TELNET    = '8'
-T_BINARY    = '9'
-T_REDUNDANT = '+'
-T_SOUND     = 's'
 
 # Dictionary mapping types to browser functions
 """
@@ -121,7 +108,7 @@ def get_menu(selector, host, port):
             continue
         typechar = line[0]
         parts = string.splitfields(line[1:], TAB)
-        if len(parts) < 4:
+        if len(parts) < 4 and typechar != 'i':
             print '(Bad line from server: %r)' % (line,)
             continue
         if len(parts) > 4:
@@ -175,7 +162,6 @@ def browse_menu(selector, host, port):
         item = list[i]
         iname = ''
         typechar, description = item[0], item[1]
-        [i_selector, i_host, i_port] = item[2:5]
 
         if typename.has_key(typechar):
             iname += typename[typechar]
@@ -184,9 +170,11 @@ def browse_menu(selector, host, port):
                 iname += '(TYPE=' + repr(typechar) + ')'
         iname += description
         if typechar != 'i' and typechar != 'h':
+            [i_selector, i_host, i_port] = item[2:5]
             url = "gopher://%s:%s/%s%s" % (i_host, i_port, typechar, i_selector)
             data += "<A HREF=%s>%s</A>" % (url, iname)
         elif typechar == 'h':
+            [i_selector, i_host, i_port] = item[2:5]
             if i_selector[:4] == 'URL:':
                 url = i_selector[4:]
             else:
@@ -212,6 +200,8 @@ class gopher_access:
                 port = o.port
             host = o.hostname
             selector = o.path
+            if o.query:
+                selector += '?' + o.query
             if not selector or selector == '/' or len(selector) < 3:
                 self.ctype = "text/html"
                 self.data = browse_menu('', host, port)                
@@ -222,6 +212,11 @@ class gopher_access:
                 if selector[1] == '0':
                     self.ctype = "text/plain"
                     self.data = '\n'.join(get_textfile(selector[2:], host, port))
+                if selector[1] == '7':
+                    search_term = tkSimpleDialog.askstring("Search engine", "Query:")
+                    self.ctype = "text/html"
+                    if search_term:
+                        self.data = browse_menu(selector[2:] + TAB + search_term, host, port)
                 if selector[1] == 'g':
                     self.ctype = "image/gif"
                     self.data = get_binary(selector[2:], host, port)
