@@ -1,8 +1,16 @@
-*"&x0000;" characters
+*show "&x0000;" characters, add other entities from builtin Python module
 *HTTPS
 *print to PDF
-*Gopher
+*Gopher support
 *CSS multi-column -> table
 *fix table layout problems, e.g. too-low y height on Wikipedia's main page
 *find other sandboxed way to run applets
 *fix bug where unvisited links are marked as visited
+
+*create new animation for stop button (spinning "T"?)
+*investigate comment formatting problems on Slashdot
+*create preference for background color
+
+perhaps later:
+*convert to Python 3
+*replace HTML/SGML parser with builtin Python module
