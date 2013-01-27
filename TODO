@@ -14,3 +14,11 @@
 perhaps later:
 *convert to Python 3
 *replace HTML/SGML parser with builtin Python module
+
+
+=========
+
+done:
+
+*basic gopher support
+*don't convert images to GIF in standalone mode
