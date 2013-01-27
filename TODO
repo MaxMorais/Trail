@@ -1,0 +1,8 @@
+*"&x0000;" characters
+*HTTPS
+*print to PDF
+*Gopher
+*CSS multi-column -> table
+*fix table layout problems, e.g. too-low y height on Wikipedia's main page
+*find other sandboxed way to run applets
+*fix bug where unvisited links are marked as visited

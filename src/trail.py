@@ -1,10 +1,10 @@
-#! /usr/bin/env python
+#! /usr/bin/env python2
 
-"""Grail -- the Extensible Internet Browser."""
+"""Trail -- the Extensible Internet Browser based on Grail"""
 
 
 # Version string in a form ready for the User-agent HTTP header
-__version__ = "Grail/0.6"
+__version__ = "Trail/0.7"
 GRAILVERSION = __version__
 
 # Standard python imports (needed by path munging code)

@@ -1,3 +1,7 @@
+Trail — A Python web browser based on Grail 0.6
+
+
+
 Notes:
 
 * Applets don't work in Python 2 because the rexec module has been deprecated.
