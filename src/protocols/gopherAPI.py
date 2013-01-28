@@ -2,7 +2,7 @@
 A Gopher protocol API
 
 Martin C. Doege
-2013-01-27
+2013-01-28
 
 Code based on Python-2.7.1/Demos/sockets/gopher.py by Guido van Rossum
 """
@@ -171,21 +171,17 @@ def browse_menu(selector, host, port):
         iname += description
         if typechar != 'i' and typechar != 'h':
             [i_selector, i_host, i_port] = item[2:5]
-            if i_selector[0] != '/':
-                i_selector = '/' + i_selector
             url = "gopher://%s:%s/%s%s" % (i_host, i_port, typechar, i_selector)
             url = url.replace(' ', "%20")
-            if url[-1] == '/':
-                url = url[:-1]
             data += '<A HREF="%s">%s</A>' % (url, iname)
         elif typechar == 'h':
             [i_selector, i_host, i_port] = item[2:5]
             if i_selector[:4] == 'URL:':
                 url = i_selector[4:]
-            if i_selector[:5] == '/URL:':
+            elif i_selector[:5] == '/URL:':
                 url = i_selector[5:]
             else:
-                url = "http://%s%s" % (i_host,  i_selector)
+                url = "gopher://%s:%s/h%s" % (i_host, i_port, i_selector)
             data += '<A HREF="%s">%s</A>' % (url, iname)
         else:
             data += iname
@@ -213,12 +209,15 @@ class gopher_access:
             if not selector or selector == '/' or len(selector) < 3:
                 self.ctype = "text/html"
                 self.data = browse_menu('', host, port)                
-            elif selector[0] == '/' and selector[2] == '/':
+            elif selector[0] == '/':
                 if selector[1] == '1':
                     self.ctype = "text/html"
                     self.data = browse_menu(selector[2:], host, port)
                 elif selector[1] == '0':
                     self.ctype = "text/plain"
+                    self.data = '\n'.join(get_textfile(selector[2:], host, port))
+                elif selector[1] == 'h':
+                    self.ctype = "text/html"
                     self.data = '\n'.join(get_textfile(selector[2:], host, port))
                 elif selector[1] == '7':
                     search_term = tkSimpleDialog.askstring("Search engine", "Query:")
