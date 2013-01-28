@@ -53,7 +53,7 @@ typename = {'0': '[TEXT]', '1': '[DIR]', '2': '[CSO]', '3': '[ERROR]', \
         '4': '[BINHEX]', '5': '[ZIP]', '6': '[UUENCODE]', '7': '[SEARCH]', \
         '8': '[TELNET]', '9': '[BINARY]', '+': '[REDUNDANT]', 's': '[SOUND]', \
         'g': '[GIF]', 'h': '[HTML]', 'I': '[IMAGE]', 'T': '[TN3270]', \
-        'p': '[PDF]', ';': '[MOVIE]'}
+        'p': '[PDF]', ';': '[MOVIE]', 'd': '[DOCUMENT]', '!': '[ERROR]'}
 
 # Oft-used characters and strings
 CRLF = '\r\n'
@@ -101,7 +101,7 @@ def get_menu(selector, host, port):
             continue
         typechar = line[0]
         parts = string.splitfields(line[1:], TAB)
-        if len(parts) < 4 and typechar != 'i':
+        if len(parts) < 4 and typechar not in ('i', '3', '!'):
             print '(Bad line from server: %r)' % (line,)
             continue
         if len(parts) > 4:
@@ -171,7 +171,7 @@ def browse_menu(selector, host, port):
         bold_line = False
         if typechar in ('2', '7', '8', 'T'):
             bold_line = True
-        if typechar != 'i' and typechar != 'h':
+        if typechar not in ('i', 'h', '3', '!'):
             [i_selector, i_host, i_port] = item[2:5]
             url = "gopher://%s:%s/%s%s" % (i_host, i_port, typechar, i_selector)
             url = url.replace(' ', "%20")
