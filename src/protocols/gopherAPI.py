@@ -48,19 +48,12 @@ DEF_SELECTOR = ''
 DEF_HOST     = 'gopher.floodgap.com'
 DEF_PORT     = 70
 
-# Dictionary mapping types to browser functions
-"""
-typebrowser = {'0': browse_textfile, '1': browse_menu, \
-        '4': browse_binary, '5': browse_binary, '6': browse_textfile, \
-        '7': browse_search, \
-        '8': browse_telnet, '9': browse_binary, 's': browse_sound}
-"""
-
 # Dictionary mapping types to strings
 typename = {'0': '[TEXT]', '1': '[DIR]', '2': '[CSO]', '3': '[ERROR]', \
-        '4': '[BINHEX]', '5': '[DOS]', '6': '[UUENCODE]', '7': '[SEARCH]', \
+        '4': '[BINHEX]', '5': '[ZIP]', '6': '[UUENCODE]', '7': '[SEARCH]', \
         '8': '[TELNET]', '9': '[BINARY]', '+': '[REDUNDANT]', 's': '[SOUND]', \
-        'g': '[GIF]', 'h': '[HTML]', 'I': '[IMAGE]', 'T': '[TN3270]', 'p': '[PDF]'}
+        'g': '[GIF]', 'h': '[HTML]', 'I': '[IMAGE]', 'T': '[TN3270]', \
+        'p': '[PDF]', ';': '[MOVIE]'}
 
 # Oft-used characters and strings
 CRLF = '\r\n'
@@ -175,20 +168,31 @@ def browse_menu(selector, host, port):
             if typechar != 'i':
                 iname += '(TYPE=' + repr(typechar) + ')'
         iname += description
+        bold_line = False
+        if typechar in ('2', '7', '8', 'T'):
+            bold_line = True
         if typechar != 'i' and typechar != 'h':
             [i_selector, i_host, i_port] = item[2:5]
             url = "gopher://%s:%s/%s%s" % (i_host, i_port, typechar, i_selector)
             url = url.replace(' ', "%20")
-            data += '<A HREF="%s">%s</A>' % (url, iname)
+            if bold_line:
+                data += '<B><A HREF="%s">%s</A></B>' % (url, iname)
+            else:
+                data += '<A HREF="%s">%s</A>' % (url, iname)
         elif typechar == 'h':
             [i_selector, i_host, i_port] = item[2:5]
             if i_selector[:4] == 'URL:':
                 url = i_selector[4:]
+                bold_line = True
             elif i_selector[:5] == '/URL:':
                 url = i_selector[5:]
+                bold_line = True
             else:
                 url = "gopher://%s:%s/h%s" % (i_host, i_port, i_selector)
-            data += '<A HREF="%s">%s</A>' % (url, iname)
+            if bold_line:
+                data += '<B><A HREF="%s">%s</A></B>' % (url, iname)
+            else:
+                data += '<A HREF="%s">%s</A>' % (url, iname)
         else:
             data += iname
         data += '\n'
