@@ -172,6 +172,7 @@ class Browser:
         self._menucmd(menu, "Back", "Left", self.back_command)
         self._menucmd(menu, "Forward", "Right", self.forward_command)
         self._menucmd(menu, "Up", "U", self.up_command)
+        self._menucmd(menu, "Main", "M", self.main_command)
         self._menucmd(menu, "Reload", "R", self.reload_command)
         menu.add_separator()
         self._menucmd(menu, 'History...', "H", self.show_history_command)
@@ -411,6 +412,9 @@ class Browser:
 
     def up_command(self, event=None):
         self.context.go_up()
+
+    def main_command(self, event=None):
+        self.context.go_main()
 
     def show_history_command(self, event=None):
         self.context.show_history_dialog()
