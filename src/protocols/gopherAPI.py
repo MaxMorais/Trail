@@ -60,7 +60,7 @@ typebrowser = {'0': browse_textfile, '1': browse_menu, \
 typename = {'0': '[TEXT]', '1': '[DIR]', '2': '[CSO]', '3': '[ERROR]', \
         '4': '[BINHEX]', '5': '[DOS]', '6': '[UUENCODE]', '7': '[SEARCH]', \
         '8': '[TELNET]', '9': '[BINARY]', '+': '[REDUNDANT]', 's': '[SOUND]', \
-        'g': '[GIF]', 'h': '[HTML]', 'I': '[IMAGE]', 'T': '[TN3270]'}
+        'g': '[GIF]', 'h': '[HTML]', 'I': '[IMAGE]', 'T': '[TN3270]', 'p': '[PDF]'}
 
 # Oft-used characters and strings
 CRLF = '\r\n'
