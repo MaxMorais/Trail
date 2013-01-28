@@ -330,6 +330,12 @@ class Context(URIContext):
         if url[-1] == '/':
             url = url[:-1]
         url = url[:url.rindex('/')]
+        # convert Gopher URLs to directory filetype ('1'):
+        try:
+            o = urlparse(url)
+            if o.scheme == "gopher" and o.path[0] == '/' and o.path[2] == '/':
+                url = url.replace(o.path[:3], "/1/")
+        except: pass
         self.load(url)
 
     def go_main(self, event=None):
