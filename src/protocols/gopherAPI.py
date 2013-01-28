@@ -53,7 +53,7 @@ typename = {'0': '[TEXT]', '1': '[DIR]', '2': '[CSO]', '3': '[ERROR]', \
         '4': '[BINHEX]', '5': '[ZIP]', '6': '[UUENCODE]', '7': '[SEARCH]', \
         '8': '[TELNET]', '9': '[BINARY]', '+': '[REDUNDANT]', 's': '[SOUND]', \
         'g': '[GIF]', 'h': '[HTML]', 'I': '[IMAGE]', 'T': '[TN3270]', \
-        'p': '[PDF]', ';': '[MOVIE]', 'd': '[DOCUMENT]', '!': '[ERROR]'}
+        'p': '[PNG]', ';': '[MOVIE]', 'd': '[PDF]', '!': '[ERROR]'}
 
 # Oft-used characters and strings
 CRLF = '\r\n'
@@ -249,10 +249,10 @@ class gopher_access:
                 elif selector[1] == 'g':
                     self.ctype = "image/gif"
                     self.data = get_binary(selector[2:], host, port)
-                elif selector[1] == 'I':
-                    if selector[-4:] == '.png':
+                elif selector[1] in ('I', 'p'):
+                    if selector[-4:].lower() == '.png':
                         self.ctype = "image/png"
-                    if selector[-4:] == '.jpg' or selector[-5:] == '.jpeg':
+                    if selector[-4:].lower() == '.jpg' or selector[-5:].lower() == '.jpeg':
                         self.ctype = "image/jpeg"
                     self.data = get_binary(selector[2:], host, port)
                 else:
