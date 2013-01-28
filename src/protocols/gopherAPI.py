@@ -182,10 +182,10 @@ def browse_menu(selector, host, port):
                 url = i_selector[5:]
             else:
                 url = "http://%s%s" % (i_host,  i_selector)
-            data += "<A HREF=%s>%s</A>" % (url, iname)
+            data += '<A HREF="%s">%s</A>' % (url, iname)
         else:
             data += iname
-        data += '<BR>\n'
+        data += '\n'
     return (LISTING_HEADER % {'url': selector}) + data + LISTING_TRAILER
 
 ####################################################
