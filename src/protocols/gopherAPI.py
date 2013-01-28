@@ -71,6 +71,7 @@ def open_socket(host, port):
     elif type(port) == type(''):
         port = string.atoi(port)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(8)
     s.connect((host, port))
     return s
 

@@ -1,13 +1,10 @@
 *show "&x0000;" characters, add other entities from builtin Python module
 *HTTPS
 *print to PDF
-*Gopher support
 *CSS multi-column -> table
 *fix table layout problems, e.g. too-low y height on Wikipedia's main page
-*find other sandboxed way to run applets
-*fix bug where unvisited links are marked as visited
-
-* gopher timeout for dead servers
+*find other sandboxed way to run applets — PyPy?
+*fix bug where unvisited links are marked as visited in HTML
 
 *create new animation for stop button (spinning "T"?)
 *investigate comment formatting problems on Slashdot
@@ -23,4 +20,6 @@ perhaps later:
 done:
 
 *basic gopher support
-*don't convert images to GIF in standalone mode
+*use PIL for JPEG/PNGs when opened directly in the browser
+*up/main navigation shortcuts
+*gopher socket timeout
