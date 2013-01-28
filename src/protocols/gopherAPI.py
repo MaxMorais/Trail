@@ -236,6 +236,15 @@ class gopher_access:
                         self.data = browse_menu(selector[2:] + TAB + search_term, host, port)
                     else:
                         self.data = "No query supplied."
+                elif selector[1] == '2':
+                    search_term = tkSimpleDialog.askstring("CSO search", "Query:")
+                    if search_term[:6] != "query ":
+                        search_term = "query %s return all" % search_term
+                    self.ctype = "text/html"
+                    if search_term:
+                        self.data = browse_menu(selector[2:] + TAB + search_term + "\nquit\n", host, port)
+                    else:
+                        self.data = "No CSO query supplied."
                 elif selector[1] == 'g':
                     self.ctype = "image/gif"
                     self.data = get_binary(selector[2:], host, port)
