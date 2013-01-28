@@ -7,6 +7,8 @@
 *find other sandboxed way to run applets
 *fix bug where unvisited links are marked as visited
 
+* gopher timeout for dead servers
+
 *create new animation for stop button (spinning "T"?)
 *investigate comment formatting problems on Slashdot
 *create preference for background color

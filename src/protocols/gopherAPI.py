@@ -127,7 +127,7 @@ def get_textfile(selector, host, port):
 # Get a text file and pass each line to a function, with trailing CRLF stripped
 def get_alt_textfile(selector, host, port, func):
     f = send_request(selector, host, port)
-    while 1:
+    while True:
         line = f.readline()
         if not line:
             print '(Unexpected EOF from server)'
@@ -140,6 +140,12 @@ def get_alt_textfile(selector, host, port, func):
             break
         if line[:2] == '..':
             line = line[1:]
+        # If the text is not valid UTF-8, assume it's in ISO 8859-1
+        #   and convert it to UTF-8 for Tkinter:
+        try:
+            line.decode('utf-8')
+        except:
+            line = line.decode('latin1').encode('utf-8')
         func(line)
     f.close()
 
