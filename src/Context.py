@@ -322,6 +322,15 @@ class Context(URIContext):
 
     def go_forward(self, event=None):
         self.load_from_history(self.history.peek(+1))
+        
+    def go_up(self, event=None):
+        url = self.get_url()
+        if '/' not in url:
+            return
+        if url[-1] == '/':
+            url = url[:-1]
+        url = url[:url.rindex('/')]
+        self.load(url)
 
     def reload_page(self):
         self.load_from_history(self.history.peek(0), reload=1)
