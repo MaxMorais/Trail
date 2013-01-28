@@ -171,8 +171,12 @@ def browse_menu(selector, host, port):
         iname += description
         if typechar != 'i' and typechar != 'h':
             [i_selector, i_host, i_port] = item[2:5]
+            if i_selector[0] != '/':
+                i_selector = '/' + i_selector
             url = "gopher://%s:%s/%s%s" % (i_host, i_port, typechar, i_selector)
             url = url.replace(' ', "%20")
+            if url[-1] == '/':
+                url = url[:-1]
             data += '<A HREF="%s">%s</A>' % (url, iname)
         elif typechar == 'h':
             [i_selector, i_host, i_port] = item[2:5]
