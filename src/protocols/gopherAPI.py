@@ -2,7 +2,7 @@
 A Gopher protocol API
 
 Martin C. Doege
-2013-01-28
+2013-01-29
 
 Code based on Python-2.7.1/Demos/sockets/gopher.py by Guido van Rossum
 """
@@ -22,9 +22,12 @@ from urllib import unquote, splithost, splitport, splituser, \
 from urlparse import urljoin
 from urlparse import urlparse
 import mimetools
-
+import textwrap
 
 from Assert import Assert
+
+# wrap text lines longer than:
+MAX_TEXT_WIDTH = 80
 
 # Stages
 META = 'META'
@@ -140,7 +143,12 @@ def get_alt_textfile(selector, host, port, func):
             line.decode('utf-8')
         except:
             line = line.decode('latin1').encode('utf-8')
-        func(line)
+        if len(line) < MAX_TEXT_WIDTH:
+            func(line)
+        else:
+            ll = textwrap.wrap(line, width = MAX_TEXT_WIDTH)
+            for x in ll:
+                func(x)
     f.close()
 
 # Get a binary file as one solid data block
