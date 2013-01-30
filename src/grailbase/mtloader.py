@@ -20,6 +20,7 @@ class MIMEExtensionLoader(extloader.ExtensionLoader):
             modname = "%s_%s" % (major, minor)
         else:
             modname = major
+        modname = modname.replace('+', '')      # for svg+xml type
         mod = self.find_module(modname)
         ext = None
         if not mod and modname != major:

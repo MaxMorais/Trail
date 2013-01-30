@@ -23,3 +23,4 @@ done:
 *use PIL for JPEG/PNGs when opened directly in the browser
 *up/main navigation shortcuts
 *gopher socket timeout
+*SVG filetype
