@@ -50,7 +50,6 @@ if hasattr(os, 'popen') and _FILTERPATH:
                 self.tf = None
                 os.system(_FILTER % (SVG_WIDTH_PX, self.tfname, self.tfname))
                 self.raw_image = Image.open(self.tfname + '.png')
-                print self.tfname + '.png'
                 self.label.image = ImageTk.PhotoImage(self.raw_image)
                 self.label.config(image=self.label.image)
             if self.tfname:
