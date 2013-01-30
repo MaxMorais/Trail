@@ -23,6 +23,7 @@ from urlparse import urljoin
 from urlparse import urlparse
 import mimetools
 import textwrap
+import mimetypes
 
 from Assert import Assert
 
@@ -260,20 +261,20 @@ class gopher_access:
                 elif selector[1] in ('I', 'p'):
                     if selector[-4:].lower() == '.png':
                         self.ctype = "image/png"
+                    if selector[-4:].lower() == '.svg':
+                        self.ctype = "image/svg+xml"
                     if selector[-4:].lower() == '.jpg' or selector[-5:].lower() == '.jpeg':
                         self.ctype = "image/jpeg"
                     self.data = get_binary(selector[2:], host, port)
                 else:
-                    self.ctype = "application/octet-stream"
+                    self.ctype = mimetypes.guess_type(selector)[0] or "application/octet-stream"
                     self.data = get_binary(selector[2:], host, port)
             else:
                 self.ctype = "text/html"
                 self.data = browse_menu(selector, host, port)                
-                
         except:
             raise
             #raise IOError, ('gopher error')
-        #print self.data
         self.state = META
 
     def pollmeta(self):
