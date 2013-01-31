@@ -2,7 +2,7 @@
 A Gopher protocol API
 
 Martin C. Doege
-2013-01-29
+2013-01-31
 
 Code based on Python-2.7.1/Demos/sockets/gopher.py by Guido van Rossum
 """
@@ -226,7 +226,7 @@ class gopher_access:
             if o.query:
                 selector += '?' + o.query
             selector = selector.replace("%20", ' ')
-            if not selector or selector == '/' or len(selector) < 3:
+            if not selector or selector == '/':
                 self.ctype = "text/html"
                 self.data = browse_menu('', host, port)                
             elif selector[0] == '/':
@@ -248,11 +248,11 @@ class gopher_access:
                         self.data = "No query supplied."
                 elif selector[1] == '2':
                     search_term = tkSimpleDialog.askstring("CSO search", "Query:")
-                    if search_term[:6] != "query ":
-                        search_term = "query %s return all" % search_term
-                    self.ctype = "text/html"
+                    self.ctype = "text/plain"
                     if search_term:
-                        self.data = browse_menu(selector[2:] + TAB + search_term + "\nquit\n", host, port)
+                        if search_term[:6] != "query ":
+                            search_term = "query %s return all" % search_term
+                        self.data = '\n'.join(get_textfile(search_term + CRLF + "quit" + CRLF, host, port))
                     else:
                         self.data = "No CSO query supplied."
                 elif selector[1] == 'g':
