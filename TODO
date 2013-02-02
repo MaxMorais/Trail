@@ -6,9 +6,9 @@
 *find other sandboxed way to run applets — PyPy?
 *fix bug where unvisited links are marked as visited in HTML
 
-*create new animation for stop button (spinning "T"?)
 *investigate comment formatting problems on Slashdot
 *create preference for background color
+*option for blocking third-party and IP-address cookies/JS/CSS/HTMLL/iframes
 
 perhaps later:
 *convert to Python 3
@@ -19,8 +19,8 @@ perhaps later:
 
 done:
 
-*basic gopher support
+*Gopher support
 *use PIL for JPEG/PNGs when opened directly in the browser
 *up/main navigation shortcuts
-*gopher socket timeout
+*Gopher socket timeout
 *SVG filetype
