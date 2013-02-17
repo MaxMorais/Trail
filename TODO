@@ -1,10 +1,10 @@
 *show "&x0000;" characters, add other entities from builtin Python module
-*HTTPS
 *print to PDF
 *CSS multi-column -> table
 *fix table layout problems, e.g. too-low y height on Wikipedia's main page
 *find other sandboxed way to run applets — PyPy?
 *fix bug where unvisited links are marked as visited in HTML
+*"View source" doesn't always work
 
 *investigate comment formatting problems on Slashdot
 *create preference for background color
@@ -13,7 +13,7 @@
 perhaps later:
 *convert to Python 3
 *replace HTML/SGML parser with builtin Python module
-
+*use gettext to support localization
 
 =========
 
@@ -24,3 +24,11 @@ done:
 *up/main navigation shortcuts
 *Gopher socket timeout
 *SVG filetype
+*UTF-8 support for text files
+*new icons
+*HTTPS support
+
+
+WONTFIX:
+
+*extra "-->" comment signs: caused by bad comment markup e.g. at Wikipedia, so not a browser bug
