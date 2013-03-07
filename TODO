@@ -1,26 +1,34 @@
 *show "&x0000;" characters, add other entities from builtin Python module
-*HTTPS
 *print to PDF
-*Gopher support
 *CSS multi-column -> table
 *fix table layout problems, e.g. too-low y height on Wikipedia's main page
-*find other sandboxed way to run applets
-*fix bug where unvisited links are marked as visited
+*find other sandboxed way to run applets — PyPy?
+*fix bug where unvisited links are marked as visited in HTML
+*"View source" doesn't always work
 
-* gopher timeout for dead servers
-
-*create new animation for stop button (spinning "T"?)
 *investigate comment formatting problems on Slashdot
 *create preference for background color
+*option for blocking third-party and IP-address cookies/JS/CSS/HTMLL/iframes
 
 perhaps later:
 *convert to Python 3
 *replace HTML/SGML parser with builtin Python module
-
+*use gettext to support localization
 
 =========
 
 done:
 
-*basic gopher support
-*don't convert images to GIF in standalone mode
+*Gopher support
+*use PIL for JPEG/PNGs when opened directly in the browser
+*up/main navigation shortcuts
+*Gopher socket timeout
+*SVG filetype
+*UTF-8 support for text files
+*new icons
+*HTTPS support
+
+
+WONTFIX:
+
+*extra "-->" comment signs: caused by bad comment markup e.g. at Wikipedia, so not a browser bug

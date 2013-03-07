@@ -2,7 +2,7 @@
 A Gopher protocol API
 
 Martin C. Doege
-2013-01-28
+2013-01-31
 
 Code based on Python-2.7.1/Demos/sockets/gopher.py by Guido van Rossum
 """
@@ -22,9 +22,13 @@ from urllib import unquote, splithost, splitport, splituser, \
 from urlparse import urljoin
 from urlparse import urlparse
 import mimetools
-
+import textwrap
+import mimetypes
 
 from Assert import Assert
+
+# wrap text lines longer than:
+MAX_TEXT_WIDTH = 80
 
 # Stages
 META = 'META'
@@ -53,7 +57,7 @@ typename = {'0': '[TEXT]', '1': '[DIR]', '2': '[CSO]', '3': '[ERROR]', \
         '4': '[BINHEX]', '5': '[ZIP]', '6': '[UUENCODE]', '7': '[SEARCH]', \
         '8': '[TELNET]', '9': '[BINARY]', '+': '[REDUNDANT]', 's': '[SOUND]', \
         'g': '[GIF]', 'h': '[HTML]', 'I': '[IMAGE]', 'T': '[TN3270]', \
-        'p': '[PDF]', ';': '[MOVIE]'}
+        'p': '[PNG]', ';': '[MOVIE]', 'd': '[PDF]', '!': '[ERROR]'}
 
 # Oft-used characters and strings
 CRLF = '\r\n'
@@ -71,6 +75,7 @@ def open_socket(host, port):
     elif type(port) == type(''):
         port = string.atoi(port)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(8)
     s.connect((host, port))
     return s
 
@@ -101,7 +106,7 @@ def get_menu(selector, host, port):
             continue
         typechar = line[0]
         parts = string.splitfields(line[1:], TAB)
-        if len(parts) < 4 and typechar != 'i':
+        if len(parts) < 4 and typechar not in ('i', '3', '!'):
             print '(Bad line from server: %r)' % (line,)
             continue
         if len(parts) > 4:
@@ -139,7 +144,12 @@ def get_alt_textfile(selector, host, port, func):
             line.decode('utf-8')
         except:
             line = line.decode('latin1').encode('utf-8')
-        func(line)
+        if len(line) < MAX_TEXT_WIDTH:
+            func(line)
+        else:
+            ll = textwrap.wrap(line, width = MAX_TEXT_WIDTH)
+            for x in ll:
+                func(x)
     f.close()
 
 # Get a binary file as one solid data block
@@ -171,7 +181,7 @@ def browse_menu(selector, host, port):
         bold_line = False
         if typechar in ('2', '7', '8', 'T'):
             bold_line = True
-        if typechar != 'i' and typechar != 'h':
+        if typechar not in ('i', 'h', '3', '!'):
             [i_selector, i_host, i_port] = item[2:5]
             url = "gopher://%s:%s/%s%s" % (i_host, i_port, typechar, i_selector)
             url = url.replace(' ', "%20")
@@ -216,7 +226,7 @@ class gopher_access:
             if o.query:
                 selector += '?' + o.query
             selector = selector.replace("%20", ' ')
-            if not selector or selector == '/' or len(selector) < 3:
+            if not selector or selector == '/':
                 self.ctype = "text/html"
                 self.data = browse_menu('', host, port)                
             elif selector[0] == '/':
@@ -238,33 +248,33 @@ class gopher_access:
                         self.data = "No query supplied."
                 elif selector[1] == '2':
                     search_term = tkSimpleDialog.askstring("CSO search", "Query:")
-                    if search_term[:6] != "query ":
-                        search_term = "query %s return all" % search_term
-                    self.ctype = "text/html"
+                    self.ctype = "text/plain"
                     if search_term:
-                        self.data = browse_menu(selector[2:] + TAB + search_term + "\nquit\n", host, port)
+                        if search_term[:6] != "query ":
+                            search_term = "query %s return all" % search_term
+                        self.data = '\n'.join(get_textfile(search_term + CRLF + "quit" + CRLF, host, port))
                     else:
                         self.data = "No CSO query supplied."
                 elif selector[1] == 'g':
                     self.ctype = "image/gif"
                     self.data = get_binary(selector[2:], host, port)
-                elif selector[1] == 'I':
-                    if selector[-4:] == '.png':
+                elif selector[1] in ('I', 'p'):
+                    if selector[-4:].lower() == '.png':
                         self.ctype = "image/png"
-                    if selector[-4:] == '.jpg' or selector[-5:] == '.jpeg':
+                    if selector[-4:].lower() == '.svg':
+                        self.ctype = "image/svg+xml"
+                    if selector[-4:].lower() == '.jpg' or selector[-5:].lower() == '.jpeg':
                         self.ctype = "image/jpeg"
                     self.data = get_binary(selector[2:], host, port)
                 else:
-                    self.ctype = "application/octet-stream"
+                    self.ctype = mimetypes.guess_type(selector)[0] or "application/octet-stream"
                     self.data = get_binary(selector[2:], host, port)
             else:
                 self.ctype = "text/html"
                 self.data = browse_menu(selector, host, port)                
-                
         except:
             raise
             #raise IOError, ('gopher error')
-        #print self.data
         self.state = META
 
     def pollmeta(self):

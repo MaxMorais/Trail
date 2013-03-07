@@ -33,19 +33,10 @@ browser--license-agreed-to:	0
 #   and no second line should be given.
 #
 browser--help-menu:
-	About Grail
+	About Trail
 		grail:data/about.html
-	Grail License
+	Original Grail License
 		grail:LICENSE
-	-
-	Grail Home Page
-		http://grail.cnri.reston.va.us/grail/
-	Python Home Page
-		http://www.python.org/
-	Python Software Activity (PSA)
-		http://www.python.org/psa/
-	CNRI Home Page
-		http://www.cnri.reston.va.us/
 #
 # Presentation defaults
 #

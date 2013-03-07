@@ -21,6 +21,9 @@ Requirements:
 
 Python 2.x, Tk, and PIL
 
+* For telnet URLs: xterm and telnet
+* For SVG files: inkscape
+
 
 Original README from CNRI follows:
 *******************************************************************************

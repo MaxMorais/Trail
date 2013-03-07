@@ -17,7 +17,7 @@ FIRST_LOGO_IMAGE = LOGO_IMAGES + "T1.gif"
 
 
 # Window title prefix
-TITLE_PREFIX = "Grail: "
+TITLE_PREFIX = "Trail: "
 
 
 # If we have an icon file, replace tktools.make_toplevel so that it gets
@@ -75,7 +75,7 @@ class Browser:
         # is definitely *not* the right thing to do since this causes
         # all sorts of problems.
         self.root = tktools.make_toplevel(self.master, class_='Grail')
-        self._window_title("Grail: New Browser")
+        self._window_title("Trail: New Browser")
         if geometry:
             self.root.geometry(geometry)
         self.root.protocol("WM_DELETE_WINDOW", self.on_delete)
@@ -443,14 +443,14 @@ class Browser:
         self.logo_index = self.logo_index + 1
         if self.logo_last > 0 and self.logo_index > self.logo_last:
             self.logo_index = 1
-        entytyname = "grail.logo.%d" % self.logo_index
+        entytyname = "trail.logo.%d" % self.logo_index
         image = self.app.load_dingbat(entytyname)
         if not image:
             if self.logo_index == 1:
                 self.logo_animate = 0
                 return
             self.logo_index = 1
-            entytyname = "grail.logo.%d" % self.logo_index
+            entytyname = "trail.logo.%d" % self.logo_index
             image = self.app.load_dingbat(entytyname)
             if not image:
                 self.logo_animate = 0
