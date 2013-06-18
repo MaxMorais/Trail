@@ -490,10 +490,7 @@ class SGMLLexer(SGMLLexerBase):
             return -1
         j = match.start()
         self.lex_comment(rawdata[i+4: j])
-        match = commentclose.match(rawdata, j)
-        if match:
-            j = match.start()
-        return j - i
+        return match.end() - i
 
     # Internal -- handle starttag, return length or -1 if not terminated
     def parse_starttag(self, i):
