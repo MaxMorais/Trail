@@ -6,15 +6,16 @@ Notes:
 
 * Applets don't work in Python 2 because the rexec module has been deprecated.
 * Caching is disabled because it threw exceptions.
-* Also, HTTPS does not work.
 
 Usage hints:
 
-* Open URLs from a search results page in a new window by clicking on them
+* Open URLs (e.g. from a search results page) in a new window by clicking on them
   with the middle mouse button.
+* Dragging with the MMB scrolls the window's contents (useful for scrolling sideways).
+  Mouse wheel scrolling also works of course.
 * Menus are tear-off in Tk, which is quite useful. (Just click on the dashed
-  line below the menu title to tear a menu off, then reposition its window.)
-* New menu commands "Go -> Up" and "Go -> Main": go up to the parent directory
+  line below the menu title to tear a menu off, then reposition the menu window.)
+* New menu commands: "Go -> Up" and "Go -> Main"; go to the parent directory
   or to the server's main page, respectively.
 
 Requirements:

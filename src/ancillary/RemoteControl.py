@@ -139,7 +139,7 @@ if not _filename:
     XDISPLAY = getenv('DISPLAY') or ':0'
     # normalize the display name
     cre = re.compile('([^:]+)?:([0-9]+)(\\.([0-9]+))?')
-    match = cre.match(XDISPLAY):
+    match = cre.match(XDISPLAY)
     if match:
         host, display, screen = match.group(1, 2, 4)
         if not host:

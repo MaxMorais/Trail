@@ -27,8 +27,3 @@ done:
 *UTF-8 support for text files
 *new icons
 *HTTPS support
-
-
-WONTFIX:
-
-*extra "-->" comment signs: caused by bad comment markup e.g. at Wikipedia, so not a browser bug

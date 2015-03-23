@@ -1,7 +1,7 @@
 [Desktop Entry]
 Comment=
 Encoding=UTF-8
-Exec=cd /usr/share/grail/src; python2 grail.py
+Exec=cd /usr/share/trail/src; python2 trail.py
 GenericName=Python web browser
 Icon=trail_logo.png
 MimeType=
